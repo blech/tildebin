@@ -7,6 +7,7 @@ import urllib2
 API_KEY=''
 SHARED_SECRET=''
 token=''         # you'll need some auth-token magic to get this
+photoset_id = ''
 
 def download(url):
 	"""Copy the contents of a file from a given URL
@@ -23,7 +24,7 @@ flickr = flickrapi.FlickrAPI(API_KEY, SHARED_SECRET,
                              token=token, store_token=False)
 
 json = flickr.photosets_getPhotos(
-           photoset_id='',
+           photoset_id=photoset_id,
            format='json',
            nojsoncallback="1",
           )
