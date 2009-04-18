@@ -4,9 +4,8 @@ import flickrapi # http://stuvel.eu/projects/flickrapi
 import simplejson
 import urllib2
 
-API_KEY=''
-SHARED_SECRET=''
-token=''         # you'll need some auth-token magic to get this
+api_key = ''
+api_secret = ''
 photoset_id = ''
 
 def download(url):
@@ -20,11 +19,11 @@ def download(url):
 	webFile.close()
 	localFile.close()
 
-flickr = flickrapi.FlickrAPI(API_KEY, SHARED_SECRET,
-                             token=token, store_token=False)
+flickr = flickrapi.FlickrAPI(api_key, api_secret,)
 
 json = flickr.photosets_getPhotos(
            photoset_id=photoset_id,
+           extras='original_format',
            format='json',
            nojsoncallback="1",
           )
@@ -32,7 +31,7 @@ json = flickr.photosets_getPhotos(
 photoset = simplejson.loads(json) # check it's valid JSON
 
 for photo in photoset['photoset']['photo']:
-  url = "http://farm%s.static.flickr.com/%s/%s_%s.jpg" % (photo['farm'], photo['server'], photo['id'], photo['secret'])
+  url = "http://farm%s.static.flickr.com/%s/%s_%s_o.jpg" % (photo['farm'], photo['server'], photo['id'], photo['originalsecret'])
   print url
   download(url)
 
